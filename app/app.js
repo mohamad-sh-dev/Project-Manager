@@ -1,4 +1,7 @@
+const { allRoutes } = require('./router/router');
+
 module.exports = class Application {
+    
     #express = require('express');
     #app = this.#express();
     constructor(PORT, DB_URL) {
@@ -13,9 +16,9 @@ module.exports = class Application {
         const path = require('path');
         this.#app.use(this.#express.json());
         this.#app.use(this.#express.urlencoded({
-            extended: true
+            extended: true 
         }));
-        this.#app.use(this.#express.static(path.join(__dirname,'..', 'public')))
+        this.#app.use(this.#express.static(path.join(__dirname, '..', 'public')))
     };
 
     configDataBase(DB_URL) {
@@ -36,26 +39,28 @@ module.exports = class Application {
         })
     };
     createRoutes() {
-        this.#app.get('/' , (req, res, next)=> {
+        this.#app.get('/', (req, res, next) => {
             return res.status(200).json({
-                status : 'success' ,
-                message : 'hello from projectManager'
+                status: 'success',
+                message: 'hello from projectManager'
             })
         })
+        this.#app.use(allRoutes)
     }
     errorHandler() {
-        this.#app.use((req, res ,next)=> {
+        this.#app.use((req, res, next) => {
             return res.status(404).json({
-                status : 'fail' ,
-                message : 'request not found'
+                status: 'fail',
+                message: 'request not found'
             })
         })
-        this.#app.use((error,req, res ,next)=> {
-            const status = error.statusCode || 500 ;
+        this.#app.use((error, req, res, next) => {
+            console.log(error);
+            const status = error.statusCode || 500;
             const message = error.message || 'InternalServerError';
             return res.status(status).json({
-                status : 'fail' ,
-                message 
+                status: 'fail',
+                message
             })
         })
     };
