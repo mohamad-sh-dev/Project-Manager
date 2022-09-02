@@ -1,12 +1,13 @@
 const {
     Router
 } = require('express');
-const { AuthController } = require('../http/controller/authController');
-const { dataValidation } = require('../http/middlewares/dataValidation');
+const { UserController } = require('../http/controller/usersController');
+const { authentication } = require('../http/middlewares/authentication');
+const { editProfileDataValidation } = require('../http/middlewares/dataValidation');
 const router = new Router();
 
-router.post('/signup' ,dataValidation ,AuthController.register )
-
+router.get('/profile' , authentication , UserController.getProfile)
+router.post('/profile', editProfileDataValidation, authentication, UserController.editProfile)
 module.exports = {
     userRoutes: router
 }

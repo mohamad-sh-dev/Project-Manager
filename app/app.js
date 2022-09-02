@@ -18,8 +18,9 @@ module.exports = class Application {
         this.#app.use(this.#express.urlencoded({
             extended: true 
         }));
+        // eslint-disable-next-line no-undef
         this.#app.use(this.#express.static(path.join(__dirname, '..', 'public')))
-    };
+    }
 
     configDataBase(DB_URL) {
         const mongoose = require('mongoose');
@@ -27,6 +28,7 @@ module.exports = class Application {
             if (!err) console.log('Database Connected Successfully...');
             else {
                 console.log(`Database Connection Error : ${err}`);
+                // eslint-disable-next-line no-undef
                 process.exit(1);
             }
         })
@@ -37,9 +39,9 @@ module.exports = class Application {
         server.listen(PORT, () => {
             console.log(`Server Started On Port ${PORT} => http://localhost:${PORT}`);
         })
-    };
+    }
     createRoutes() {
-        this.#app.get('/', (req, res, next) => {
+        this.#app.get('/', (req, res) => {
             return res.status(200).json({
                 status: 'success',
                 message: 'hello from projectManager'
@@ -48,13 +50,14 @@ module.exports = class Application {
         this.#app.use(allRoutes)
     }
     errorHandler() {
-        this.#app.use((req, res, next) => {
+        this.#app.use((req, res) => {
             return res.status(404).json({
                 status: 'fail',
                 message: 'request not found'
             })
         })
-        this.#app.use((error, req, res, next) => {
+         // eslint-disable-next-line no-unused-vars
+         this.#app.use((error, req, res , next) => {
             console.log(error);
             const status = error.statusCode || 500;
             const message = error.message || 'InternalServerError';
@@ -63,5 +66,5 @@ module.exports = class Application {
                 message
             })
         })
-    };
+    }
 }

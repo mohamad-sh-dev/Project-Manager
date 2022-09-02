@@ -4,7 +4,7 @@ const ajv = new Ajv({
     $data: true
 })
 require('ajv-errors')(ajv)
-ajv.addKeyword('userSchema')
+ajv.addKeyword('registerUserSchema')
 ajv.addKeyword('errorMessages')
 const createValidateWithAjv = (schema, object) => {
     const validate = ajv.compile(schema);

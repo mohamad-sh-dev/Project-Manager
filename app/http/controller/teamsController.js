@@ -1,11 +1,11 @@
 class TeamController {
-    createTeam() {};
-    inviteUserToTeam(){};
-    removeUserFromTeam(){};
-    getTeamsList(){};
-    getTeamUsers(){};
-    getTeamByName(){};
-    getTeamById(){};
+    createTeam() {}
+    inviteUserToTeam(){}
+    removeUserFromTeam(){}
+    getTeamsList(){}
+    getTeamUsers(){}
+    getTeamByName(){}
+    getTeamById(){}
 
 }
 

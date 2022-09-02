@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-
-const UserSchema = new mongoose.Schema({
+const bcrypt = require('bcrypt');
+const userSchema = new mongoose.Schema({
     firstName: {
         type: String,
         required: [true, 'نام مورد نیاز میباشد']
@@ -18,10 +18,6 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: [true, 'رمز عبور مورد نیاز میباشد']
     },
-    passwordConfirm: {
-        type: String,
-        required: [true, 'تکرار رمز عبور مورد نیاز میباشد']
-    },
     email: {
         type: String,
         required: [true, 'رایانامه مورد نیاز میباشد'],
@@ -32,11 +28,11 @@ const UserSchema = new mongoose.Schema({
         required: [true, 'شماره همراه مورد نیاز میباشد']
     },
     roles: {
-        type: String,
-        defualt: ['USER']
+        type: [String],
+        default: ['USER']
     },
     skills: {
-        type: String,
+        type: [String],
         default: []
     },
     teams: {
@@ -47,7 +43,17 @@ const UserSchema = new mongoose.Schema({
     timestamps: true
 });
 
-const UserModel = mongoose.model('User' , UserSchema);
-module.exports ={
+userSchema.pre('save', async function (next) {
+    if (!this.isModified('password')) return next();
+    this.password = await bcrypt.hash(this.password, 10);
+    next();
+})
+
+userSchema.method('comparePassword', async (savedPass, enteredPass) => {
+    return await bcrypt.compare(enteredPass, savedPass);
+})
+
+const UserModel = mongoose.model('User', userSchema);
+module.exports = {
     UserModel
 };
