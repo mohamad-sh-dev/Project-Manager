@@ -56,9 +56,7 @@ class AuthController {
                     token : createToken({
                         email: existUser.email ,
                         username : existUser.username
-                    }) ,
-                    ...request.body
-                }
+                })                }
             })
 
         } catch (error) {

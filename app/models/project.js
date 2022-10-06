@@ -8,9 +8,9 @@ const ProjectSchema = new mongoose.Schema({
     description: {
         type: String
     },
-    image: {
+    projectImage: {
         type: String,
-        defualt : '/uploads/projects/default.png'
+        default: '/uploads/projects/default.png'
     },
     owner: {
         type: mongoose.Types.ObjectId,
@@ -18,6 +18,10 @@ const ProjectSchema = new mongoose.Schema({
     },
     team: {
         type: mongoose.Types.ObjectId
+    }, 
+    tags : {
+        type : [String] ,
+        default : []
     },
     isPublic: {
         type: Boolean,

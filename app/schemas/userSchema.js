@@ -72,7 +72,6 @@ const registerUserSchema = {
   additionalProperties: false,
   required: ['username', 'email', 'mobileNumber', 'password', 'passwordConfirm']
 }
-
 const loginUserSchema = {
   title: 'login',
   $id: 'loginSchema',
@@ -105,7 +104,6 @@ const loginUserSchema = {
   additionalProperties: false,
   required: ['email']
 }
-
 const editProfileSchema = {
   title: 'profile',
   $id: 'editProfileSchema',
@@ -121,7 +119,14 @@ const editProfileSchema = {
       $id: '#editProfileSchema/lastName',
       type: 'string'
     },
-
+    skills: {
+      title: 'skills',
+      $id: '#editProfileSchema/skills',
+      type: 'array' ,
+      items : {
+        type : 'string' 
+      }
+    },
     mobileNumber: {
       title: 'mobileNumber',
       $id: '#editProfileSchema/mobileNumber',
@@ -133,16 +138,77 @@ const editProfileSchema = {
     },
   },
   additionalProperties: false,
-  required: ['test'] ,
+  required: [],
   errorMessage: {
-    type: "داده های ورودی نا معتبرند" ,
-    additionalProperties : 'داده های غیر مجاز' ,
-    required : 'داده مورد نیاز'
+    type: "داده های ورودی نا معتبرند",
+    additionalProperties: 'داده های غیر مجاز',
+  },
+}
+const uploadProfilePhoto = {
+  title: 'uploadPhoto',
+  $id: 'uploadPhotoSchema',
+  type: 'object',
+  properties: {
+    fieldname: {
+      title: 'fieldname',
+      $id: '#uploadPhotoSchema/fieldname',
+      type: 'string'
+    },
+    originalname: {
+      title: 'originalname',
+      $id: '#uploadPhotoSchema/originalname',
+      type: 'string'
+    },
+    encoding: {
+      title: 'encoding',
+      $id: '#uploadPhotoSchema/encoding',
+      type: 'string'
+    },
+    mimetype: {
+      title: 'mimetype',
+      $id: '#uploadPhotoSchema/mimetype',
+      type: 'string',
+      enum: ['image/jpeg', 'image/jpg', 'image/png'],
+      errorMessage: {
+        enum: 'فرمت فایل معتبر نمیباشد'
+      }
+    },
+    destination: {
+      title: 'destination',
+      $id: '#uploadPhotoSchema/destination',
+      type: 'string'
+    },
+    filename: {
+      title: 'filename',
+      $id: '#uploadPhotoSchema/filename',
+      type: 'string'
+    },
+    path: {
+      title: 'path',
+      $id: '#uploadPhotoSchema/path',
+      type: 'string'
+    },
+    size: {
+      title: 'size',
+      $id: '#uploadPhotoSchema/size',
+      type: 'number',
+      maximum : 2 *1024*1024 ,
+      errorMessage: {
+        maximum: 'حجم فایل نمیتواند بیشتر از 2 مگابایت باشد'
+      }
+    },
+  },
+  additionalProperties: false,
+  required: [],
+  errorMessage: {
+    type: "داده های ورودی نا معتبرند",
+    additionalProperties: 'داده های غیر مجاز',
   },
 }
 
 module.exports = {
   registerUserSchema,
-  loginUserSchema ,
-  editProfileSchema
+  loginUserSchema,
+  editProfileSchema,
+  uploadProfilePhoto
 }

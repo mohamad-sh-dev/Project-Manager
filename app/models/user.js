@@ -38,6 +38,14 @@ const userSchema = new mongoose.Schema({
     teams: {
         type: [mongoose.Types.ObjectId],
         default: []
+    },
+    profileImage : {
+        type : String ,
+        default: 'uploads/default.png'
+    },
+    inviteRequests : {
+        type : [mongoose.Schema.ObjectId] ,
+        ref: 'InviteRequest'
     }
 }, {
     timestamps: true

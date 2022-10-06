@@ -5,12 +5,17 @@ const TeamSchema = new mongoose.Schema({
         type: String,
         required: [true, 'نام تیم مورد نیاز میباشد']
     },
-    description: {
+    summary: {
         type: String
+    },
+    alias: {
+        type: String , 
+        unique : true ,
+        required : [true , 'نام مستعار مورد نیاز میباشد']
     },
     users: {
         type: [mongoose.Types.ObjectId],
-        defualt : []
+        default : []
     },
     owner: {
         type: mongoose.Types.ObjectId,

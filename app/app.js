@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const { allRoutes } = require('./router/router');
 
 module.exports = class Application {
@@ -19,7 +20,7 @@ module.exports = class Application {
             extended: true 
         }));
         // eslint-disable-next-line no-undef
-        this.#app.use(this.#express.static(path.join(__dirname, '..', 'public')))
+        this.#app.use(this.#express.static(path.join(__dirname, '..' , 'public')))
     }
 
     configDataBase(DB_URL) {
